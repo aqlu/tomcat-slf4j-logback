@@ -154,7 +154,7 @@
 
     <build>
         <!-- For tomcat juli -->
-        <finalName>tomcat-juli</finalName>
+        <finalName>tomcat-juli-logback</finalName>
 
         <!-- For embedded tomcat juli -->
         <!-- <finalName>tomcat-embed-logging-juli</finalName> -->
@@ -365,7 +365,7 @@
                             <artifactSet>
                                 <includes>
                                     <!-- For tomcat juli -->
-                                    <include>org.apache.tomcat:tomcat-juli</include>
+                                    <!-- <include>org.apache.tomcat:tomcat-juli</include> -->
 
                                     <!-- For embedded tomcat juli -->
                                     <!-- <include>org.apache.tomcat.embed:tomcat-embed-logging-juli</include> -->
@@ -373,12 +373,12 @@
                                     <include>org.slf4j:jcl-over-slf4j</include>
                                     <include>org.slf4j:slf4j-api</include>
                                     <include>ch.qos.logback:logback-classic</include>
-                                    <include>ch.qos.logback:logback-core</include>
+                                    <!--<include>ch.qos.logback:logback-core</include>-->
                                 </includes>
                             </artifactSet>
                             <filters>
                                 <!-- For tomcat juli -->
-                                <filter>
+                               <!--  <filter>
                                     <artifact>org.apache.tomcat:tomcat-juli</artifact>
                                     <includes>
                                         <include>org/apache/juli/ClassLoaderLogManager**</include>
@@ -386,7 +386,7 @@
                                         <include>META-INF/LICENSE</include>
                                         <include>META-INF/NOTICE</include>
                                     </includes>
-                                </filter>
+                                </filter> -->
 
                                 <!-- For embedded tomcat juli -->
                                 <!-- 
@@ -402,6 +402,9 @@
 
                                 <filter>
                                     <artifact>org.slf4j:jcl-over-slf4j</artifact>
+                                    <includes>
+                                        <include>org/apache/commons/logging/impl/SLF4J**</include>
+                                    </includes>
                                     <excludes>
                                         <exclude>META-INF/services/**</exclude>
                                     </excludes>
@@ -417,8 +420,8 @@
                                     <shadedPattern>org.apache.juli.logging.org.slf4j</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>ch.qos.logback</pattern>
-                                    <shadedPattern>org.apache.juli.logging.ch.qos.logback</shadedPattern>
+                                    <pattern>ch.qos.logback.classic.util</pattern>
+                                    <shadedPattern>org.apache.juli.logback.classic.util</shadedPattern>
                                 </relocation>
                                 <!-- Located in org.apache.juli.logging.ch.qos.logback.classic.util -->
                                 <relocation>
@@ -441,8 +444,8 @@
                                     <file>${project.basedir}/src/assembly/LICENSE-slf4j.txt</file>
                                 </transformer>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.IncludeResourceTransformer">
-                                    <resource>META-INF/services/org.apache.commons.logging.LogFactory</resource>
-                                    <file>${project.basedir}/src/assembly/services/org.apache.commons.logging.LogFactory</file>
+                                    <resource>META-INF/services/org.apache.juli.logging.LogFactory</resource>
+                                    <file>${project.basedir}/src/assembly/services/org.apache.juli.logging.LogFactory</file>
                                 </transformer>
                             </transformers>
                         </configuration>
